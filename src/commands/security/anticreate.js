@@ -1,0 +1,1 @@
+module.exports={name:'anticreate',category:'security',description:'anticreate',async execute(ctx){ctx.gState.securityToggles=ctx.gState.securityToggles||{};ctx.gState.securityToggles['anticreate']=!ctx.gState.securityToggles['anticreate'];return ctx.reply('anticreate: '+(ctx.gState.securityToggles['anticreate']?'ON':'OFF'));}};

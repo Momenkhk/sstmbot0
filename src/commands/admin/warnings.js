@@ -1,0 +1,1 @@
+module.exports={name:'warnings',category:'admin',description:'الحصول على قائمة التحذيرات لعضو',async execute(ctx){const t=ctx.targetMemberFromArgs()||ctx.member;const k=`${ctx.guild.id}:${t.id}`;const w=ctx.state.userWarnings[k]||[];return ctx.reply(w.length?w.map((x,i)=>`${i+1}) ${x.reason}`).join('\n'):'لا يوجد تحذيرات');}};

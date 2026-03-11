@@ -1,0 +1,1 @@
+module.exports={name:'autorole',category:'roles',description:'اضافة رتبة لكل عضو يدخل',async execute(ctx){const r=ctx.targetRoleFromArgs(0);if(!r)return ctx.reply('حدد رتبة');ctx.gState.autoRoleId=r.id;return ctx.reply(`✅ تم تحديد AutoRole: ${r.name}`);}};

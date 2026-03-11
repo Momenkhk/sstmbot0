@@ -1,0 +1,1 @@
+module.exports={name:'circle',category:'general',description:'عرض صورة العضو على شكل دائرة',async execute(ctx){const u=ctx.targetUserFromArgs()||ctx.user;return ctx.reply(`(circle) ${u.displayAvatarURL({size:4096})}`);}};

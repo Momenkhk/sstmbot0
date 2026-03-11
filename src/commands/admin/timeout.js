@@ -1,0 +1,1 @@
+module.exports={name:'timeout',category:'admin',description:'اعطاء تايم اوت',async execute(ctx){const t=ctx.targetMemberFromArgs();if(!t)return ctx.reply('حدد عضو');const m=Number(ctx.args[1]||10);await t.timeout(m*60*1000,ctx.args.slice(2).join(' ')||'Timeout');return ctx.reply('✅ تم التايم اوت');}};

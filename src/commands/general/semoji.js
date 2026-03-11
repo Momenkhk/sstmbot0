@@ -1,0 +1,1 @@
+module.exports={name:'semoji',category:'general',description:'أرسال صورة الايموجي',async execute(ctx){const id=((ctx.args[0]||'').match(/\d+/)||[])[0];if(!id)return ctx.reply('اكتب ايموجي أو ID');return ctx.reply(`https://cdn.discordapp.com/emojis/${id}.png?size=4096&quality=lossless`);}};

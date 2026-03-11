@@ -1,0 +1,1 @@
+module.exports={name:'change',category:'general',description:'اضافة فلتر لصورة',async execute(ctx){const u=ctx.targetUserFromArgs()||ctx.user;return ctx.reply(`(filter) ${u.displayAvatarURL({size:4096})}`);}};

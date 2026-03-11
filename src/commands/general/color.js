@@ -1,0 +1,1 @@
+module.exports={name:'color',category:'general',description:'اختيار لون',async execute(ctx){const r=ctx.targetRoleFromArgs(0);if(!r)return ctx.reply('حدد رتبة لون');await ctx.member.roles.add(r);return ctx.reply('✅ تم اختيار اللون');}};

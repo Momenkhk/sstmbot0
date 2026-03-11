@@ -1,0 +1,1 @@
+module.exports={name:'allbans',category:'admin',description:'قائمة المحظورين',async execute(ctx){const b=await ctx.guild.bans.fetch();return ctx.reply(b.size?b.map(x=>`${x.user.tag} (${x.user.id})`).join('\n').slice(0,1900):'لا يوجد محظورين');}};

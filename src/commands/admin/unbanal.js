@@ -1,0 +1,1 @@
+module.exports={name:'unbanal',category:'admin',description:'الغاء المحظورين من السيرفر',async execute(ctx){const b=await ctx.guild.bans.fetch();for(const [,x] of b) await ctx.guild.bans.remove(x.user.id);return ctx.reply('✅ تم فك جميع المحظورين');}};

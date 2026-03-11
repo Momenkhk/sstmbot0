@@ -1,0 +1,1 @@
+module.exports={name:'unban',category:'admin',description:'الغاء الحظر من شخص',async execute(ctx){const id=(ctx.args[0]||'').replace(/[<@!>]/g,'');if(!id)return ctx.reply('اكتب ID');await ctx.guild.bans.remove(id);return ctx.reply('✅ تم فك الحظر');}};

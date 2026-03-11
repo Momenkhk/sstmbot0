@@ -1,0 +1,1 @@
+module.exports={name:'setowner',category:'owners',description:'إضافة اونر للبوت',async execute(ctx){const id=(ctx.args[0]||'').replace(/[<@!>]/g,'');if(!id)return ctx.reply('اكتب ID');if(!ctx.config.owners.includes(id))ctx.config.owners.push(id);ctx.saveConfig();return ctx.reply('✅ تمت الإضافة');}};

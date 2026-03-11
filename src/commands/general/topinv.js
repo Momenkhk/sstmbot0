@@ -1,0 +1,1 @@
+module.exports={name:'topinv',category:'general',description:'اعلى عدد دعوات',async execute(ctx){const t=Object.entries(ctx.state.inviteLeaders).filter(([k])=>k.startsWith(`${ctx.guild.id}:`)).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([k,v],i)=>`${i+1}. <@${k.split(':')[1]}> - ${v}`).join('\n')||'لا يوجد';return ctx.reply(`🏅 Top Invites\n${t}`);}};

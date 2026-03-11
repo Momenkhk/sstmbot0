@@ -1,0 +1,1 @@
+module.exports={name:'kick',category:'admin',description:'طرد عضو من السيرفر',async execute(ctx){const t=ctx.targetMemberFromArgs();if(!t)return ctx.reply('حدد عضو');await t.kick(ctx.args.slice(1).join(' ')||'No reason');return ctx.reply('✅ تم الطرد');}};

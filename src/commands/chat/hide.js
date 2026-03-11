@@ -1,0 +1,1 @@
+module.exports={name:'hide',category:'chat',description:'إحفاء الشات عن الكل',async execute(ctx){await ctx.channel.permissionOverwrites.edit(ctx.guild.roles.everyone,{ViewChannel:false});return ctx.reply('✅ تم إخفاء الروم');}};
