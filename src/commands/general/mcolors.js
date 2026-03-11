@@ -1,0 +1,1 @@
+module.exports={name:'mcolors',category:'general',description:'اختار لونك من القائمة',async execute(ctx){const l=(ctx.gState.colorRoleIds||[]).map((id,i)=>`${i+1}. <@&${id}>`).join('\n');return ctx.reply(l||'لا توجد رولات ألوان');}};

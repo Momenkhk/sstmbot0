@@ -1,0 +1,1 @@
+module.exports={name:'top',category:'general',description:'عرض توب 8 اشخاص',async execute(ctx){const t=Object.entries(ctx.state.userPoints).filter(([k])=>k.startsWith(`${ctx.guild.id}:`)).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([k,v],i)=>`${i+1}. <@${k.split(':')[1]}> - ${v}`).join('\n')||'لا يوجد';return ctx.reply(`🏆 Top 8\n${t}`);}};

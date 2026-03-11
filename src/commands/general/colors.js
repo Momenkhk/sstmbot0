@@ -1,0 +1,1 @@
+module.exports={name:'colors',category:'general',description:'علبة الالوان',async execute(ctx){const l=(ctx.gState.colorRoleIds||[]).map((id,i)=>`${i+1}. <@&${id}>`).join('\n');return ctx.reply(l||'لا توجد رولات ألوان');}};

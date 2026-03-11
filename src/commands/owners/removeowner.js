@@ -1,0 +1,1 @@
+module.exports={name:'removeowner',category:'owners',description:'ازالة اونر من البوت',async execute(ctx){const id=(ctx.args[0]||'').replace(/[<@!>]/g,'');ctx.config.owners=(ctx.config.owners||[]).filter(x=>x!==id);ctx.saveConfig();return ctx.reply('✅ تمت الإزالة');}};

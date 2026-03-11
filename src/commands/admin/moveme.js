@@ -1,0 +1,1 @@
+module.exports={name:'moveme',category:'admin',description:'توديك لعضو بروم اخر',async execute(ctx){const t=ctx.targetMemberFromArgs();if(!t?.voice?.channel)return ctx.reply('العضو غير متصل');await ctx.member.voice.setChannel(t.voice.channel);return ctx.reply('✅ تم نقلك');}};

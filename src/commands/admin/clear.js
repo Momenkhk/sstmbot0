@@ -1,0 +1,1 @@
+module.exports={name:'clear',category:'admin',description:'مسح رسائل الشات',async execute(ctx){const n=Math.min(Math.max(Number(ctx.args[0]||10),1),100);await ctx.channel.bulkDelete(n,true);return ctx.reply(`✅ تم حذف ${n} رسالة`);}};

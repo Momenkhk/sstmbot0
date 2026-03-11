@@ -1,0 +1,1 @@
+module.exports={name:'ban',category:'admin',description:'حظر العضو',async execute(ctx){const t=ctx.targetMemberFromArgs();if(!t)return ctx.reply('حدد عضو');await t.ban({reason:ctx.args.slice(1).join(' ')||'No reason'});return ctx.reply('✅ تم الحظر');}};

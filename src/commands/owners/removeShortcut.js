@@ -1,0 +1,1 @@
+module.exports={name:'removeShortcut',category:'owners',description:'يحذف اختصار',async execute(ctx){const a=(ctx.args[0]||'').toLowerCase();if(!ctx.state.shortcuts[a])return ctx.reply('غير موجود');delete ctx.state.shortcuts[a];return ctx.reply('✅ تم الحذف');}};

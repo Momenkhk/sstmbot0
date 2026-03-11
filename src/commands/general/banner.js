@@ -1,0 +1,1 @@
+module.exports={name:'banner',category:'general',description:'عرض بنر شخص',async execute(ctx){const id=(ctx.args[0]||ctx.user.id).replace(/[<@!>]/g,'');const u=await ctx.client.users.fetch(id,{force:true});return ctx.reply(u.bannerURL({size:4096})||'لا يوجد بنر.');}};

@@ -1,0 +1,1 @@
+module.exports={name:'lock',category:'chat',description:'قفل الروم',async execute(ctx){await ctx.channel.permissionOverwrites.edit(ctx.guild.roles.everyone,{SendMessages:false});return ctx.reply('✅ تم قفل الروم');}};

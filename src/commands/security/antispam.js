@@ -1,0 +1,1 @@
+module.exports={name:'antispam',category:'security',description:'antispam',async execute(ctx){ctx.gState.securityToggles=ctx.gState.securityToggles||{};ctx.gState.securityToggles['antispam']=!ctx.gState.securityToggles['antispam'];return ctx.reply('antispam: '+(ctx.gState.securityToggles['antispam']?'ON':'OFF'));}};

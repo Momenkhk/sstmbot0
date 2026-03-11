@@ -1,0 +1,1 @@
+module.exports={name:'cmunprefix',category:'owners',description:'أستعامل جميع الاوامر بدون برفيكس',async execute(ctx){const v=String(ctx.args[0]||'').toLowerCase();ctx.gState.ownersOnlyNoPrefix=['on','true','1'].includes(v);return ctx.reply(`✅ cmunprefix = ${ctx.gState.ownersOnlyNoPrefix?'ON':'OFF'}`);}};

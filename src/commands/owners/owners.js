@@ -1,0 +1,1 @@
+module.exports={name:'owners',category:'owners',description:'عرض قائمة الاونرات',async execute(ctx){return ctx.reply((ctx.config.owners||[]).map(id=>`- <@${id}> (${id})`).join('\n')||'لا يوجد أونرز');}};

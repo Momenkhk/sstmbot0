@@ -1,0 +1,1 @@
+module.exports={name:'listlcomnd',category:'owners',description:'يظهر قائمة الاختصارات',async execute(ctx){const l=Object.entries(ctx.state.shortcuts).map(([a,b])=>`- ${a} => ${b}`).join('\n');return ctx.reply(l||'لا يوجد اختصارات');}};

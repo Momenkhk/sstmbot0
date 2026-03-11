@@ -1,0 +1,1 @@
+module.exports={name:'pslist',category:'security',description:'عرض قائمة الحماية المفعلة والمعطلة',async execute(ctx){const l=Object.entries(ctx.gState.securityToggles||{}).map(([k,v])=>`- ${k}: ${v?'ON':'OFF'}`).join('\n');return ctx.reply(l||'لا يوجد');}};

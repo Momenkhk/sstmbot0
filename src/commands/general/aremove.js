@@ -1,0 +1,1 @@
+module.exports={name:'aremove',category:'general',description:'يزيل خلفية الصور',async execute(ctx){const u=ctx.targetUserFromArgs()||ctx.user;return ctx.reply(`(remove-bg) ${u.displayAvatarURL({size:4096})}`);}};

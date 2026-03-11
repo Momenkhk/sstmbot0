@@ -1,0 +1,1 @@
+module.exports={name:'setnick',category:'admin',description:'تغيير اسم عضو داخل السيرفر',async execute(ctx){const t=ctx.targetMemberFromArgs();if(!t)return ctx.reply('حدد عضو');await t.setNickname(ctx.args.slice(1).join(' ')||null);return ctx.reply('✅ تم تغيير النك نيم');}};
