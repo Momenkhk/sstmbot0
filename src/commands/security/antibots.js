@@ -1,0 +1,1 @@
+module.exports={name:'antibots',category:'security',description:'antibots',async execute(ctx){ctx.gState.securityToggles=ctx.gState.securityToggles||{};ctx.gState.securityToggles['antibots']=!ctx.gState.securityToggles['antibots'];return ctx.reply('antibots: '+(ctx.gState.securityToggles['antibots']?'ON':'OFF'));}};

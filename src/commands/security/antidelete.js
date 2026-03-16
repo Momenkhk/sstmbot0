@@ -1,0 +1,1 @@
+module.exports={name:'antidelete',category:'security',description:'antidelete',async execute(ctx){ctx.gState.securityToggles=ctx.gState.securityToggles||{};ctx.gState.securityToggles['antidelete']=!ctx.gState.securityToggles['antidelete'];return ctx.reply('antidelete: '+(ctx.gState.securityToggles['antidelete']?'ON':'OFF'));}};

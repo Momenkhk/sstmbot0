@@ -1,0 +1,1 @@
+module.exports={name:'myrole',category:'roles',description:'تعديل رولك الخاص',async execute(ctx){const r=ctx.targetRoleFromArgs(0);if(!r)return ctx.reply('حدد رتبة');await ctx.member.roles.add(r);return ctx.reply('✅ تم تعديل رولك');}};

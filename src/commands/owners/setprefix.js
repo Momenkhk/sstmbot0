@@ -1,0 +1,1 @@
+module.exports={name:'setprefix',category:'owners',description:'تغيير بادئه البوت',async execute(ctx){if(!ctx.args[0])return ctx.reply(`البادئة الحالية: ${ctx.config.prefix}`);ctx.config.prefix=ctx.args[0];ctx.saveConfig();return ctx.reply(`✅ البادئة الجديدة: ${ctx.config.prefix}`);}};

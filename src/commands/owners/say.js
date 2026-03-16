@@ -1,0 +1,1 @@
+module.exports={name:'say',category:'owners',description:'أرسال رساله عن طريق البوت',async execute(ctx){const t=ctx.args.join(' ');if(!t)return ctx.reply('اكتب رسالة');await ctx.channel.send(t);return ctx.reply('✅ تم');}};

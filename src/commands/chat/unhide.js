@@ -1,0 +1,1 @@
+module.exports={name:'unhide',category:'chat',description:'إظهار الشات للكل',async execute(ctx){await ctx.channel.permissionOverwrites.edit(ctx.guild.roles.everyone,{ViewChannel:true});return ctx.reply('✅ تم إظهار الروم');}};

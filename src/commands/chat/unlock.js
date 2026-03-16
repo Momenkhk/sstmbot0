@@ -1,0 +1,1 @@
+module.exports={name:'unlock',category:'chat',description:'فتح الروم',async execute(ctx){await ctx.channel.permissionOverwrites.edit(ctx.guild.roles.everyone,{SendMessages:true});return ctx.reply('✅ تم فتح الروم');}};

@@ -1,0 +1,1 @@
+module.exports={name:'slowmode',category:'chat',description:'تفعيل الوضع البطيئ بالروم',async execute(ctx){const s=Math.max(0,Math.min(21600,Number(ctx.args[0]||5)));await ctx.channel.setRateLimitPerUser(s);return ctx.reply(`✅ slowmode = ${s}s`);}};

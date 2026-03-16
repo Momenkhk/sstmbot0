@@ -1,0 +1,1 @@
+module.exports={name:'antilink',category:'security',description:'antilink',async execute(ctx){ctx.gState.securityToggles=ctx.gState.securityToggles||{};ctx.gState.securityToggles['antilink']=!ctx.gState.securityToggles['antilink'];return ctx.reply('antilink: '+(ctx.gState.securityToggles['antilink']?'ON':'OFF'));}};

@@ -1,0 +1,1 @@
+module.exports={name:'acomnd',category:'owners',description:'أضافه اختصار للأوامر',async execute(ctx){const a=(ctx.args[0]||'').toLowerCase();const t=ctx.args[1];if(!a||!t)return ctx.reply('acomnd <alias> <command>');if(!ctx.commands.has(t))return ctx.reply('الأمر غير موجود');ctx.state.shortcuts[a]=t;return ctx.reply(`✅ ${a} => ${t}`);}};

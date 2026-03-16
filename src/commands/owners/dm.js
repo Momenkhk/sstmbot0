@@ -1,0 +1,1 @@
+module.exports={name:'dm',category:'owners',description:'أرسال رساله لخاص العضو',async execute(ctx){const id=(ctx.args[0]||'').replace(/[<@!>]/g,'');const t=ctx.args.slice(1).join(' ');if(!id||!t)return ctx.reply('dm <id> <text>');const u=await ctx.client.users.fetch(id);await u.send(t);return ctx.reply('✅ تم الإرسال');}};

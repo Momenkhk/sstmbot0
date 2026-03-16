@@ -1,0 +1,18 @@
+{
+  "token": "PUT_YOUR_BOT_TOKEN_HERE",
+  "clientId": "PUT_YOUR_CLIENT_ID_HERE",
+  "prefix": "!",
+  "owners": [
+    "PUT_OWNER_ID_HERE"
+  ],
+  "defaultPermissionRoleByCategory": {
+    "general": null,
+    "admin": null,
+    "roles": null,
+    "chat": null,
+    "security": null,
+    "settings": null,
+    "tickets": null,
+    "owners": null
+  }
+}

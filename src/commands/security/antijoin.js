@@ -1,0 +1,1 @@
+module.exports={name:'antijoin',category:'security',description:'antijoin',async execute(ctx){ctx.gState.securityToggles=ctx.gState.securityToggles||{};ctx.gState.securityToggles['antijoin']=!ctx.gState.securityToggles['antijoin'];return ctx.reply('antijoin: '+(ctx.gState.securityToggles['antijoin']?'ON':'OFF'));}};

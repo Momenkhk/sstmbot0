@@ -1,0 +1,1 @@
+module.exports={name:'role',category:'roles',description:'اضافة رتبة لعضو',async execute(ctx){const t=ctx.targetMemberFromArgs();const r=ctx.targetRoleFromArgs(1);if(!t||!r)return ctx.reply('role <member> <role>');await t.roles.add(r);return ctx.reply('✅ تمت إضافة الرتبة');}};
