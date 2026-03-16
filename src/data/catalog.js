@@ -145,6 +145,7 @@ module.exports = {
     "acomnd",
     "listlcomnd",
     "removeShortcut",
-    "status"
+    "status",
+    "A5tsar"
   ]
 };

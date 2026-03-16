@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, GatewayIntentBits, Partials, REST, Routes } = require('discord.js');
+const { Client, GatewayIntentBits, Partials, REST, Routes, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
 const { loadState, saveState, loadPermissions, savePermissions } = require('./core/storage');
 const { loadCommands, buildSlashCommands } = require('./core/commandRegistry');
 const { isOwner, hasAccess } = require('./core/permissions');
@@ -16,7 +16,7 @@ const client = new Client({ intents:[GatewayIntentBits.Guilds,GatewayIntentBits.
 function saveConfig(){ fs.writeFileSync(configPath, JSON.stringify(config, null, 2)); }
 function getGuildState(guildId){ if(!state.guilds[guildId]) state.guilds[guildId]={securityToggles:{},blockedWords:[],channels:{},colorRoleIds:[],ownersOnlyNoPrefix:false,autoRoleId:null}; return state.guilds[guildId]; }
 
-function resolveCommand(raw, slash=false){ if(!raw) return raw; if(slash && bySlash.has(raw)) return bySlash.get(raw); const k=String(raw).toLowerCase(); if(state.shortcuts[k]) return state.shortcuts[k]; if(aliases[k]) return aliases[k]; if(commands.has(raw)) return raw; return [...commands.keys()].find(x=>x.toLowerCase()===k)||raw; }
+function resolveCommand(raw, slash=false){ if(!raw) return { name: raw, presetArgs: [] }; if(slash && bySlash.has(raw)) return { name: bySlash.get(raw), presetArgs: [] }; const k=String(raw).toLowerCase(); if(state.shortcuts[k]) { const parts=String(state.shortcuts[k]).trim().split(/\s+/).filter(Boolean); return { name: parts.shift(), presetArgs: parts }; } if(aliases[k]) return { name: aliases[k], presetArgs: [] }; if(commands.has(raw)) return { name: raw, presetArgs: [] }; const found=[...commands.keys()].find(x=>x.toLowerCase()===k)||raw; return { name: found, presetArgs: [] }; }
 
 function buildCtx(source,args,commandName){
   const guild=source.guild, member=source.member, user=source.user||source.author, channel=source.channel, gState=getGuildState(guild.id);
@@ -30,16 +30,23 @@ function buildCtx(source,args,commandName){
 }
 
 async function runCommand(source,raw,args,slash=false){
-  const name=resolveCommand(raw,slash); const cmd=commands.get(name); if(!cmd) return source.reply('❌ الأمر غير موجود');
+  const resolved=resolveCommand(raw,slash);
+  const name=resolved.name;
+  const cmd=commands.get(name);
+  if(!cmd) return source.reply('❌ الأمر غير موجود');
+
   const userId=(source.user||source.author).id;
   if(!hasAccess({config,member:source.member,userId,category:cmd.category,permissionsByCategory})) return source.reply('⛔ ليس لديك صلاحية لاستخدام هذا الأمر');
+
+  const finalArgs=[...(resolved.presetArgs||[]), ...(args||[])];
   state.userPoints[`${source.guild.id}:${userId}`]=(state.userPoints[`${source.guild.id}:${userId}`]||0)+1;
-  await cmd.execute(buildCtx(source,args,name));
+  await cmd.execute(buildCtx(source,finalArgs,name));
   saveState(state);
 }
 
 client.once('ready', async()=>{
   console.log(`Logged in as ${client.user.tag}`);
+  await client.user.setPresence({ status: 'idle' });
   const rest=new REST({version:'10'}).setToken(config.token);
   try{ await rest.put(Routes.applicationCommands(config.clientId),{body:buildSlashCommands(commands)}); console.log(`Registered ${commands.size} slash commands`);}catch(e){console.error('Slash register error:',e.message);} 
   for(const [,g] of client.guilds.cache){try{const invites=await g.invites.fetch(); state.inviteSnapshot[g.id]=Object.fromEntries(invites.map(i=>[i.code,i.uses||0]));}catch{}}
@@ -56,6 +63,69 @@ client.on('messageCreate', async(message)=>{
   const raw=message.content.startsWith(config.prefix)?message.content.slice(config.prefix.length).trim():message.content.trim(); if(!raw) return;
   const parts=raw.split(/\s+/); const cmd=parts.shift();
   try{ await runCommand(message,cmd,parts,false);}catch(e){console.error(e);message.reply(`❌ ${e.message}`);} 
+});
+
+client.on('interactionCreate', async (interaction) => {
+  if (!interaction.isButton()) return;
+  if (interaction.customId !== 'a5tsar:create') return;
+  if (!isOwner(config, interaction.user.id)) {
+    await interaction.reply({ content: '⛔ هذا البنل للأونرز فقط.', ephemeral: true });
+    return;
+  }
+
+  const modal = new ModalBuilder()
+    .setCustomId('a5tsar:modal')
+    .setTitle('إنشاء اختصار');
+
+  const aliasInput = new TextInputBuilder()
+    .setCustomId('alias')
+    .setLabel('الاختصار (مثال: م)')
+    .setStyle(TextInputStyle.Short)
+    .setRequired(true)
+    .setMaxLength(20);
+
+  const expansionInput = new TextInputBuilder()
+    .setCustomId('expansion')
+    .setLabel('الأمر الكامل (مثال: clear 10)')
+    .setStyle(TextInputStyle.Short)
+    .setRequired(true)
+    .setMaxLength(100);
+
+  modal.addComponents(
+    new ActionRowBuilder().addComponents(aliasInput),
+    new ActionRowBuilder().addComponents(expansionInput)
+  );
+
+  await interaction.showModal(modal);
+});
+
+client.on('interactionCreate', async (interaction) => {
+  if (!interaction.isModalSubmit()) return;
+  if (interaction.customId !== 'a5tsar:modal') return;
+
+  if (!isOwner(config, interaction.user.id)) {
+    await interaction.reply({ content: '⛔ هذا البنل للأونرز فقط.', ephemeral: true });
+    return;
+  }
+
+  const alias = interaction.fields.getTextInputValue('alias').trim().toLowerCase();
+  const expansion = interaction.fields.getTextInputValue('expansion').trim();
+
+  if (!alias || !expansion) {
+    await interaction.reply({ content: '❌ بيانات ناقصة.', ephemeral: true });
+    return;
+  }
+
+  const targetName = expansion.split(/\s+/)[0];
+  const resolved = resolveCommand(targetName, false).name;
+  if (!commands.has(resolved)) {
+    await interaction.reply({ content: '❌ الأمر الهدف غير موجود.', ephemeral: true });
+    return;
+  }
+
+  state.shortcuts[alias] = expansion;
+  saveState(state);
+  await interaction.reply({ content: `✅ تم حفظ الاختصار: **${alias}** => **${expansion}**`, ephemeral: true });
 });
 
 client.on('interactionCreate', async(interaction)=>{
